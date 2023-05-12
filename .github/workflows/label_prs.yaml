@@ -1,0 +1,39 @@
+name: Pull Request Labeling
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  label_pull_request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Label pull request
+        run: |
+          # Retrieve pull request information
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          PR_TITLE=$(jq --raw-output .pull_request.title "$GITHUB_EVENT_PATH")
+
+          # Add your custom labeling logic here
+          if [[ $PR_TITLE =~ "bug" ]]; then
+            LABELS+="bug,"
+          fi
+
+          # Add labels to the pull request
+          if [[ -n $LABELS ]]; then
+            echo "Adding labels: $LABELS"
+            IFS="," read -ra LABELS_ARRAY <<< "$LABELS"
+            for label in "${LABELS_ARRAY[@]}"; do
+              gh pr edit "$PR_NUMBER" --add-labels "$label"
+            done
+          else
+            echo "No labels to add."
+          fi
