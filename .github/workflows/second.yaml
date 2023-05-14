@@ -1,0 +1,21 @@
+## this workflow runs on manual triggering it, since we have given workflow_dispatch as the event here.
+
+name: Second
+
+on:
+  workflow_dispatch:
+
+jobs:
+  secondJobName:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run a one-line script
+        run: echo Hello
+
+      - name: Run a multi-line script
+        run: |
+          echo Hello again!
+          echo Hello once more!

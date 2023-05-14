@@ -1,0 +1,22 @@
+## this workflow runs on push into the master branch
+
+name: Demo Workflow
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  secondJobName:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run a one-line script
+        run: echo Hello
+
+      - name: Run a multi-line script
+        run: |
+          echo Hello again!
+          echo Hello once more!
