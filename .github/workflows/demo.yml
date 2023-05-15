@@ -1,0 +1,24 @@
+name: Demo Workflow
+
+on:
+  issues:
+    types:
+      - opened
+
+env:
+  name: Pratham
+
+jobs:
+  secondJobName:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run a one-line script
+        run: "echo Hello $name"
+
+      - name: Run a multi-line script
+        run: |
+          echo Hello again!
+          echo "$name"
