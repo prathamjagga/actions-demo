@@ -3,8 +3,12 @@
 name: Demo Workflow
 
 on:
-  push:
-    branches: ["master"]
+  issues:
+    types:
+      - opened
+
+env:
+  name: Pratham
 
 jobs:
   secondJobName:
@@ -14,9 +18,9 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Run a one-line script
-        run: echo Hello
+        run: "echo Hello $name"
 
       - name: Run a multi-line script
         run: |
           echo Hello again!
-          echo Hello once more!
+          echo "$name"
